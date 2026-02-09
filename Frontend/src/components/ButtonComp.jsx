@@ -1,8 +1,8 @@
 import react from 'react';
 
-const Button = ({textcolor,btn_text,btn_color,btn_hover,misc,padding}) => {
+const Button = ({click,textcolor,btn_text,btn_color,btn_hover,misc,padding}) => {
     return(
-        <button className={`
+        <button onClick={click} className={`
             ${btn_color}
             text-md
             ${textcolor}
@@ -14,7 +14,9 @@ const Button = ({textcolor,btn_text,btn_color,btn_hover,misc,padding}) => {
             transition-all 
             duration-100 
             ${btn_hover}
-            ${misc}`}>
+            ${misc}
+            `
+            }>
 
             {btn_text}
 
