@@ -18,7 +18,7 @@ const Landing = function () {
           <NavItem text='Home'/>
           <NavItem text='FAQ'/>
           <NavItem text='Contact'/>
-          <ButtonComp btn_text='Log In' btn_color='bg-gray-50' btn_hover='hover:bg-gray-300' padding='px-5' click={()=> navi("/login")}/>
+          <ButtonComp btn_text='Log In' btn_color='bg-gray-50' btn_hover='hover:bg-gray-300 active:bg-gray-400' padding='md:px-5' click={()=> navi("/login")}/>
           </div>
           <button onClick={()=>setIsOpen(!isOpen)} className='md:hidden cursor-grab z-65'>
             {!isOpen && (<img className='bg-white h-5' src="https://img.icons8.com/?size=100&id=8113&format=png&color=000000" alt="" />)}
@@ -30,7 +30,7 @@ const Landing = function () {
           <NavItem text='Home'/>
           <NavItem text='FAQ'/>
           <NavItem text='Contact'/>
-          <ButtonComp btn_text='Log In' btn_color='bg-gray-50' btn_hover='hover:bg-gray-300' padding='px-5'/>
+          <ButtonComp btn_text='Log In' btn_color='bg-gray-50' btn_hover='hover:bg-gray-300' padding='px-15 py-2 mb-2' click={()=> navi("/login")}/>
         </div>
       }
       <div className='md:flex md:relative'>
@@ -46,7 +46,7 @@ const Landing = function () {
       </div>
       </div>
       <div className='flex md:justify-normal justify-center'>
-      <ButtonComp btn_text='Get Started' btn_color='bg-gradient-to-r from-pink-500 to-amber-500' misc='md:ml-25 md:ml-5 px-5 py-2 text-gray-800' btn_hover='hover:from-fuschia-300 hover:to-yellow-500 hover:shadow-amber-500 hover:shadow-[1px_1px_10px_rgba(0,0,0,0.2)] '/>
+      <ButtonComp btn_text='Get Started' btn_color='bg-gradient-to-r from-pink-500 to-amber-500' misc='md:ml-25 md:ml-5 px-5 py-2 text-gray-800' btn_hover='active:from-rose-400 active:to-yellow-500 hover:shadow-amber-500 hover:shadow-[1px_1px_10px_rgba(0,0,0,0.2)] '/>
       </div>
 
     </div>
