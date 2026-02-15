@@ -9,7 +9,7 @@ const Landing = function () {
   const navi = useNavigate();
 
   return (
-    <div className='min-h-screen min-w-full bg-gradient-to-tl from-sky-950 to-black relative '>
+    <div className='min-h-screen min-w-full bg-[url(https://images.pexels.com/photos/2531709/pexels-photo-2531709.jpeg)] bg-black/15 bg-blend-overlay relative '>
 
 
       <header className='flex justify-between items-center bg-black relative pt-5 md:mr-15 mr-5'>
@@ -37,8 +37,8 @@ const Landing = function () {
       <div className='text-gray-300 md:mt-30 md:ml-25 m-5 '>
         <p className='text-5xl font-bold bg-gradient-to-r from-amber-500 to-pink-500 bg-clip-text text-transparent'>Connect with friends</p>
         <p className='text-5xl font-bold bg-gradient-to-r from-amber-500 to-pink-500 bg-clip-text text-transparent'>Collaborate as teams</p>
-        <p className='text-2xl font-medium mt-3'>Welcome to FiveStack, where chaos meets productivity <br /> Quasi doloribus nemo amet molestias provident quo <br /> eveniet, corporis voluptatum sit ex mollitia laudantium <br /> modi magnam, iusto reiciendis, quos voluptates et. Qui!</p>
-        <p className='text-2xl font-medium'>Lorem ipsum dolor sit amet consectetur adipisicing elit. <br /> Quasi doloribus nemo amet molestias provident quo <br /> eveniet, corporis voluptatum sit ex mollitia laudantium <br /> modi magnam, iusto reiciendis, quos voluptates et. Qui!</p>
+        <p className='text-2xl font-medium mt-3'>Welcome to FiveStack, home to friendly chaos, <br /> late-night deep conversations, and productivity. <br /> The choice is yours if you want them all.</p>
+        <p className='text-2xl font-medium'>Whether you are debugging at 3 AM or dropping ideas <br /> between commits, FiveStack is there for it all. <br /> Just you, your group and your ideas.</p>
       </div>
       <div className='md:mb-0 mb-5 flex justify-center'>
         <img className='w-2/3 md:absolute md:w-1/3 md:right-30 md:top-40 border-2 border-gray-500' src='/assets/Screenshot.png'/>
