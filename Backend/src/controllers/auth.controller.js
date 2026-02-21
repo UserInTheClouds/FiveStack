@@ -9,6 +9,9 @@ export const loginRoute = (req,res)=>{
 export const signupRoute = async (req,res)=>{
     const {username,email,password} = req.body;
     try {
+        if(!password||!email||!username){
+            res.status(400).json({message:"All fields are required"});
+        }
         if(password.length<8){
            return res.status(400).json({message: "Password must be atleast 8 characters"});
         }
@@ -28,7 +31,7 @@ export const signupRoute = async (req,res)=>{
             tokenGen(newUser._id,res);
             await newUser.save();
             res.status(201).json({
-                _id:newuser._id,
+                _id:newUser._id,
                 password:newUser.password,
                 email:newUser.email,
                 username:newUser.username,
