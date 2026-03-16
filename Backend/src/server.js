@@ -2,6 +2,7 @@ import express from 'express'
 import authRoute from './routes/auth.route.js'
 import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
+import messageRoute from './routes/message.route.js'
 dotenv.config();
 
 const app = express();
@@ -15,6 +16,7 @@ app.get('/',(req,res)=>{
 })
 
 app.use('/api/auth',authRoute);
+app.use('/api/messages',messageRoute);
 
 app.listen(process.env.port,()=>{
     try {

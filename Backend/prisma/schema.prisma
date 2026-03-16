@@ -13,5 +13,27 @@ model User {
   username String @unique
   password String
   createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  messages Message[]
+  groups Group[]
+}
+
+model Message{
+  id Int @id @default(autoincrement())
+  content String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  senderId Int 
+  sender User @relation(fields:[senderId], references:[id])
+  groupId Int
+  group Group @relation(fields:[groupId],references:[id])
+}
+
+model Group{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  participants User[]
+  messages Message[]
+  isGroup Boolean @default(false)
 }
