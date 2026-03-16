@@ -4,39 +4,23 @@ export const sendMessage = async (req,res)=>{
     try {
         const {text} = req.body;
         if(!text){
-            return res.status(500).json('Message cannot be empty');
+            return res.status(400).json('Message cannot be empty');
         }
         const receiverId = Number(req.params.id);
         const senderId = req.user.id;
-        let groupChat;
-        
-        const receiver = await prisma.group.findUnique({
-            where:{
-                id:receiverId
-            }
-        });
-        if(receiver.isGroup){
-            groupChat = await prisma.group.findFirst({
-                where:{isGroup:true,
-                AND:[
-                    {participants:{some:{id:senderId}}},
-                    {participants:{some:{id:receiverId}}}
-                ]}
-            });
-        }
-        if(!receiver.isGroup){
-            groupChat = await prisma.group.findFirst({
+        let groupChat = await prisma.group.findFirst({
                 where:{isGroup:false,
                 AND:[
                     {participants:{some:{id:senderId}}},
                     {participants:{some:{id:receiverId}}}
                 ]}
             });
-        }
+
         
         if(!groupChat){
             groupChat = await prisma.group.create({
                 data:{
+                    isGroup:false,
                     participants:{
                         connect:[
                             {id:senderId},
@@ -59,7 +43,7 @@ export const sendMessage = async (req,res)=>{
 
     } catch (error) {
         console.log("Error in sendMessage controller",error);
-        return res.status(400).json({message:error.message});        
+        return res.status(500).json({message:error.message});        
     }
 }
 
@@ -67,28 +51,7 @@ export const receiveMessage = async (req,res)=>{
     try {
         const senderId = req.user.id;
         const receiverId = Number(req.params.id);
-        let groupChat;
-
-        const receiver = await prisma.group.findFirst({
-            where:{
-                id:receiverId
-            }
-        })
-
-        if(receiver.isGroup){
-            groupChat = await prisma.group.findFirst({
-                where:{
-                    isGroup:true,
-                    AND:[
-                        {participants:{some:{id:senderId}}},
-                        {participants:{some:{id:receiverId}}}
-                    ]
-                }
-            })
-        }
-
-        if(!receiver.isGroup){
-            groupChat = await prisma.group.findFirst({
+        let groupChat = await prisma.group.findFirst({
                 where:{
                     isGroup:false,
                     AND:[
@@ -104,16 +67,15 @@ export const receiveMessage = async (req,res)=>{
                     }
                 }
             })
-        }
 
         if(!groupChat){
-            return res.status(500).json({message:"This chat does not exist"});
+            return res.status(200).json([]);
         }
 
         return res.status(200).json(groupChat.messages);
 
     } catch (error) {
         console.log('Error in receiveMessage controller',error);
-        return res.status(400).json({message:error.message});
+        return res.status(500).json({message:error.message});
     }
 }

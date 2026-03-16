@@ -3,13 +3,13 @@ import bcrypt from 'bcrypt'
 import genToken from '../utilities/jwtGen.js'
 
 export const signupRoute = async (req,res)=>{
-    const {username,email,password} = req.body;
     try {
+        const {username,email,password} = req.body;
         if(!password || !email || !username){
-            return res.status(500).json({message:"All fields are mandatory!"});
+            return res.status(400).json({message:"All fields are mandatory!"});
         }
         if(password.length<8){
-            return res.status(500).json({message:"Password must be atleast 8 characters long"});
+            return res.status(400).json({message:"Password must be atleast 8 characters long"});
         }
 
         //Checks if email already exists
@@ -20,7 +20,7 @@ export const signupRoute = async (req,res)=>{
         }) 
 
         if(existingUser){
-            return res.status(500).json({message:"This email already exists"});
+            return res.status(400).json({message:"This email already exists"});
         }
 
         //Checks if username already exists
@@ -31,7 +31,7 @@ export const signupRoute = async (req,res)=>{
         })
         
         if(existingUsern){
-            return res.status(500).json({message:"This username already exists"})
+            return res.status(400).json({message:"This username already exists"})
         }
 
         //Saving to database
@@ -57,7 +57,7 @@ export const signupRoute = async (req,res)=>{
         }
     } catch (error) {
         console.log("error in signup controller",error);
-        return res.status(400).json({message:error.message});
+        return res.status(500).json({message:error.message});
     }
 }
 
@@ -71,12 +71,12 @@ export const loginRoute = async (req,res) => {
         });
 
         if(!existingUser){
-            return res.status(500).json({message:"User does not exist"});
+            return res.status(400).json({message:"User does not exist"});
         }
         
         const isPasswordCorrect = await bcrypt.compare(password,existingUser.password);
         if(!isPasswordCorrect){
-            return res.status(500).json({message:"Password is incorrect"});
+            return res.status(400).json({message:"Password is incorrect"});
         }
 
         genToken(existingUser.id,res);
@@ -88,7 +88,7 @@ export const loginRoute = async (req,res) => {
 
     } catch (error) {
         console.log('Error in Login controller',error);
-        return res.status(400).json({message:error.message});
+        return res.status(500).json({message:error.message});
     }
 }
 
@@ -100,7 +100,7 @@ export const logoutRoute = async (req,res) =>{
         return res.status(200).json({message:"Logged out successfully"});
     } catch (error) {
         console.log("Error in logout controller",error);
-        return res.status(400).json({message:error.message});
+        return res.status(500).json({message:error.message});
     }
 }
 
@@ -110,6 +110,6 @@ export const checkRoute = async(req,res) => {
 
     } catch (error) {
         console.log('Error in checkRoute',error);
-        return res.status(400).json({message:error.message});
+        return res.status(500).json({message:error.message});
     }
 }
