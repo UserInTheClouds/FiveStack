@@ -79,3 +79,65 @@ export const receiveMessage = async (req,res)=>{
         return res.status(500).json({message:error.message});
     }
 }
+
+export const getUsersRoute = async (req,res)=>{
+    try {
+        const userId = req.user.id;
+        const chatGroup = await prisma.user.findMany({
+            where:{
+                id:{not:userId},
+                groups:{
+                    some:{
+                        isGroup:false,
+                        participants:{
+                            some:{id:userId}
+                        }
+                    }
+                }
+                
+            },
+            select:{
+                id:true,
+                username:true,
+                email:true
+            }
+        });
+
+        return res.status(200).json(chatGroup);
+
+    } catch (error) {
+        console.log("Error in getUsersRoute controller",error);
+        return res.status(500).json({message:error.message});
+    }
+}
+
+export const searchUsername = async (req,res)=>{
+    try{
+    const senderId = req.user.id;
+    const text = req.query.text;
+    const foundUser = await prisma.user.findMany({
+        where:{
+            id:{not:senderId},
+            username:{
+                contains:text,
+                mode:"insensitive"
+            }
+        },
+        select:{
+            id:true,
+            username:true,
+            email:true
+        }
+    })
+    if (!foundUser){
+        return res.status(200).json([]);
+    }
+    
+    return res.status(200).json(foundUser);
+    
+    }
+    catch(error){
+        console.log("Error in searchUsername controller",error);
+        return res.status(500).json({message:error.message});
+    }
+}
