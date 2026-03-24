@@ -9,7 +9,6 @@ const zustandStore = create((set)=>({
     isCheckingAuth:true,
     checkAuth: async ()=>{
         try {
-            //CHANGE to https when deploying
             const res = await axios.get('/api/auth/check', {withCredentials:true})
             set({authUser: res.data})
             
@@ -20,6 +19,7 @@ const zustandStore = create((set)=>({
             set({ isCheckingAuth: false })
         }
     },
+
     getUsers: async () => {
         try {
             const res = await axios.get('/api/messages/users',{withCredentials:true});
@@ -29,10 +29,37 @@ const zustandStore = create((set)=>({
         }
     },
 
+    getMessages: async (userId) => {
+        try{
+        const res = await axios.get(`/api/messages/receive/${userId}`,{withCredentials:true});
+        set({messages:res.data})
+        }
+        catch(error){
+            console.log("Failed to get messages",error);
+        }
+    },
+
+    sendMessages: async (text) => {
+        try {
+            const {messages, selectedUser} = zustandStore.getState();
+            const res = await axios.post(`/api/messages/send/${selectedUser.id}`,{text},{withCredentials:true});
+            set({messages:[...messages,res.data]});      
+        } catch (error) {
+            console.log('Error in sending messages',error);
+        }
+    },
+
+    searchUser: async (searchText) => {
+        try {
+            const res = await axios.get(`/api/messages/users/search?text=${searchText}`,{withCredentials:true});
+            set({users:res.data});
+        } catch (error) {
+            console.log('Failed to search users',error);
+        }
+    },
+
     setAuthUser: (user) => set({authUser:user}),
     setSelectedUser: (user) => set({selectedUser:user}),
-    setMessage: (newMessage) => set({message:newMessage}),
-    addMessage: (message) => set((state)=>({messages:[...state.messages,message]})),
     logout: async () => {
         try {
             const res = await axios.post('/api/auth/logout',{},{withCredentials:true})
