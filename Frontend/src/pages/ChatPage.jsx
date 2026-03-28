@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import zustandStore from "../misc/zustand.utility";
 
-const Home = () => {
+const Chat = () => {
     const { 
         authUser, logout, users, getUsers, 
         selectedUser, setSelectedUser, 
@@ -151,4 +151,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default Chat;

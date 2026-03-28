@@ -1,6 +1,7 @@
 import { useState } from "react";
 import zustandStore from "../misc/zustand.utility"
 import axios from 'axios'
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
 
@@ -9,6 +10,7 @@ const Signup = () => {
     const [email,setEmail] = useState('');
     const [username,setUsername] = useState('');
     const [errorMsg,setErrorMsg] = useState(null);
+    const navigate = useNavigate();
 
     const signupFunction = async (e) => {
         e.preventDefault();

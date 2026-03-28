@@ -4,7 +4,8 @@ import './App.css'
 import zustandStore from './misc/zustand.utility.js'
 import Login from './pages/loginPage.jsx'
 import Signup from './pages/signupPage.jsx'
-import Home from './pages/HomePage.jsx'
+import Chat from './pages/ChatPage.jsx'
+import Landing from './pages/LandingPage.jsx'
 
 function App() {
   const [count, setCount] = useState(0);
@@ -19,9 +20,10 @@ function App() {
 
   return (
     <Routes>
-        <Route path='/' element={authUser?<Home/>:<Navigate to='/login'/>} />
-        <Route path='/login' element={!authUser?<Login/>:<Navigate to='/'/>} />
-        <Route path='/signup' element={!authUser?<Signup/>:<Navigate to='/'/>} />
+        <Route path='/' element={!authUser?<Landing/>:<Navigate to='/chat'/>} />
+        <Route path='/chat' element={authUser?<Chat/>:<Navigate to='/'/>} />
+        <Route path='/login' element={!authUser?<Login/>:<Navigate to='/chat'/>} />
+        <Route path='/signup' element={!authUser?<Signup/>:<Navigate to='/chat'/>} />
     </Routes>
   )
 }
