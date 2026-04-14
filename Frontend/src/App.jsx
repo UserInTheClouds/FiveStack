@@ -10,11 +10,20 @@ import Landing from './pages/LandingPage.jsx'
 function App() {
   const [count, setCount] = useState(0);
 
-  const { authUser, isCheckingAuth, checkAuth } = zustandStore();
+  const { authUser, isCheckingAuth, checkAuth, connectSocket, disconnectSocket } = zustandStore();
 
   useEffect(() => {
     checkAuth(); // 👈 trigger auth check on mount
   }, []);
+
+  useEffect(()=>{
+    if(authUser){
+      connectSocket();
+    }
+    else{
+      disconnectSocket();
+    }
+  },[authUser,connectSocket,disconnectSocket]);
 
    if (isCheckingAuth) return <div className='bg-black w-screen h-screen text-white flex items-center justify-center text-4xl' >Loading...</div>;
 

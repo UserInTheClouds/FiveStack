@@ -39,7 +39,14 @@ export const sendMessage = async (req,res)=>{
             }
         })
 
-        return res.status(201).json({newMessage});
+        const io = req.app.get("io");
+        const userSocketMap = req.app.get('userSocketMap');
+        const receiverSocketId = userSocketMap[receiverId];
+        if(receiverSocketId){
+            io.to(receiverSocketId).emit('newMessage',newMessage)
+        }
+
+        return res.status(201).json(newMessage);
 
     } catch (error) {
         console.log("Error in sendMessage controller",error);

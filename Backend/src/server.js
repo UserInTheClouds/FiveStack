@@ -3,9 +3,36 @@ import authRoute from './routes/auth.route.js'
 import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
 import messageRoute from './routes/message.route.js'
+import {createServer} from 'http'
+import {Server} from 'socket.io'
 dotenv.config();
 
 const app = express();
+const httpServer = createServer(app);
+
+const sio = new Server(httpServer,{
+    cors:{
+        origin:"http://localhost:5173",
+        methods:['GET','POST']
+    }
+})
+
+app.set("io",sio);
+const userSocketMap = {};
+app.set("userSocketMap",userSocketMap);
+
+sio.on('connection',(socket)=>{
+    const userId = socket.handshake.query.userId;
+    if(userId) userSocketMap[userId] = socket.id;
+    console.log(`User ${userId} is connected with socket id : ${socket.id}`);
+    socket.on("sendMessage",(msgData)=>{
+        socket.broadcast.emit('receiveMessage',msgData);
+    })
+    socket.on('disconnect',()=>{
+        console.log(`User ${userId} disconnected`);
+        delete userSocketMap[userId];
+    })
+})
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -18,7 +45,7 @@ app.get('/',(req,res)=>{
 app.use('/api/auth',authRoute);
 app.use('/api/messages',messageRoute);
 
-app.listen(process.env.port,()=>{
+httpServer.listen(process.env.port,()=>{
     try {
         console.log("Server is working at port",process.env.PORT);
     } catch (error) {

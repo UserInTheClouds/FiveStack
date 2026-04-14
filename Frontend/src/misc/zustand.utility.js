@@ -1,12 +1,36 @@
 import {create} from 'zustand'
 import axios from 'axios'
+import {io} from 'socket.io-client'
 
-const zustandStore = create((set)=>({
+const zustandStore = create((set,get)=>({
     authUser:null,
+    socket:null,
     selectedUser:null,
     messages:[],
     users:[],
     isCheckingAuth:true,
+    socket:null,
+    connectSocket:()=>{
+        const {authUser} = get();
+        if(!authUser) return;
+        const socket = io("http://localhost:3000",{
+            query:{userId:authUser.id}
+        });
+        socket.on('connect',()=>{
+            console.log("Connected to socket server");
+        })
+        socket.on('newMessage',(message)=>{
+            set((state)=>({messages:[...state.messages,message]}));
+        });
+        set({socket});
+    },
+    disconnectSocket:()=>{
+        const {socket} = get();
+        if(socket){
+            socket.disconnect();
+            set({socket:null});
+        }
+    },
     checkAuth: async ()=>{
         try {
             const res = await axios.get('/api/auth/check', {withCredentials:true})

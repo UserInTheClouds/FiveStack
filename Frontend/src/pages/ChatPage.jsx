@@ -6,7 +6,7 @@ const Chat = () => {
         authUser, logout, users, getUsers, 
         selectedUser, setSelectedUser, 
         messages, getMessages, sendMessages,
-        searchUser 
+        searchUser,socket,connectSocket,disconnectSocket 
     } = zustandStore();
 
     const [text, setText] = useState("");
@@ -44,7 +44,7 @@ const Chat = () => {
             <div className="flex w-full overflow-hidden rounded-2xl bg-stone-900 border border-stone-700 shadow-2xl">
                 
                 {/* SIDEBAR */}
-                <div className="w-1/4 border-r border-stone-700 bg-stone-800 flex flex-col">
+                <div className="w-1/4 border-r border-stone-700 bg-white/5 flex flex-col">
                     <div className="p-4 border-b border-stone-700 flex justify-between items-center bg-stone-900">
                         <span className="font-bold text-lg text-blue-400">FiveStack</span>
                         <span className="text-xs text-gray-400">@{authUser?.username}</span>

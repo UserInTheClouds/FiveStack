@@ -5,8 +5,8 @@ const Landing = () => {
     const navigate = useNavigate();
 
     return(
-        <div className="bg-[url('./assets/bg6.jpg')] bg-cover bg-black/40 bg-blend-multiply h-screen w-screen text-white">
-            <header className="w-screen h-18 relative flex items-center">
+        <div className="bg-[url('./assets/bg6.jpg')] bg-cover bg-black/70 bg-blend-multiply h-screen w-screen text-white">
+            <header className="w-screen h-18 relative flex items-center opacity-92">
                 <span className="absolute left-12 hover:cursor-pointer font-['Anton','sans-serif'] scale-x-175 scale-y-150 bg-gradient-to-r from-gray-200 to-cyan-300 bg-clip-text text-transparent">
                     Five<span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Stack</span>
                 </span>
@@ -18,7 +18,7 @@ const Landing = () => {
                 </button>
             </header>
 
-            <div className="p-5 justify-center text-center items-center flex mt-30">
+            <div className="p-5 justify-center text-center items-center flex mt-30 opacity-95">
                 <div className="">
                 <span className="font-extrabold font-sans text-7xl leading-18 block">
                     <span className="">CONNECT WITH FRIENDS</span> <br />

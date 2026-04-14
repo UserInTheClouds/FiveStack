@@ -1,16 +1,18 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import zustandStore from "../misc/zustand.utility"
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
 
+    const [firstLoad,setFirstLoad] = useState(false);
     const {setAuthUser} = zustandStore();
     const [password,setPassword] = useState('');
     const [email,setEmail] = useState('');
     const [username,setUsername] = useState('');
     const [errorMsg,setErrorMsg] = useState(null);
     const navigate = useNavigate();
+    useEffect(()=>{setFirstLoad(true)},[]);
 
     const signupFunction = async (e) => {
         e.preventDefault();
@@ -27,23 +29,26 @@ const Signup = () => {
 
     return(
         
-        <div className="bg-black text-white w-screen h-screen flex items-center justify-center">
-            <div className="bg-stone-800 w-1/3 h-fit rounded-2xl px-10 py-10">
+        <div className="bg-[url('./assets/bg6.jpg')] bg-cover bg-blend-multiply bg-black/70 bg-no-repeat text-white w-screen h-screen flex items-center justify-center relative ">
+            <div className="absolute top-5 left-5">
+                <button className="transition-all duration-200 opacity-50 hover:opacity-80 hover:cursor-pointer font-bold" onClick={()=>navigate('/')}>&lt; Back</button>
+            </div>
+            <div className={`md:bg-white/8 backdrop-blur-2xl w-full md:w-2/5  md:h-fit p-10 rounded-4xl relative shadow-xl shadow-black/50 border-1 border-white/10 transition-opacity duration-600 ease-out ${firstLoad?"opacity-100":"opacity-0"} `}>
                 <form onSubmit={signupFunction} >
                     <div className="mb-5">
-                        <label className="block opacity mb-2 ">Email</label>
+                        <label className="block opacity-70 mb-2  ">Email</label>
                         <input type="email" value={email} required onChange={(e)=>setEmail(e.target.value)}
-                        className="bg-gray-700 rounded-sm w-full h-8 " />
+                        className="bg-gray-700/40 border-1 border-gray-300/10 rounded-md w-full h-10 px-1 py-2 text-gray-100 focus:outline-none focus:ring-1 focus:ring-white/25 transition-all duration-100 placeholder:opacity-30" placeholder="Email Address" />
                     </div>
                     <div className="mt-5">
-                        <label className="block opacity mb-2 ">Username</label>
+                        <label className="block opacity-70 mb-2  ">Username</label>
                         <input type="text" value={username} required onChange={(e)=>setUsername(e.target.value)}
-                        className="bg-gray-700 rounded-sm w-full h-8 " />
+                        className="bg-gray-700/40 border-1 border-gray-300/10 rounded-md w-full h-10 px-1 py-2 text-gray-100 focus:outline-none focus:ring-1 focus:ring-white/25 transition-all duration-100 placeholder:opacity-30" placeholder="Username" />
                     </div>
                     <div className="mt-5">
-                        <label className="block opacity mb-2 ">Password</label>
+                        <label className="block opacity-70 mb-2  ">Password</label>
                         <input type="password" value={password} required onChange={(e)=>setPassword(e.target.value)}
-                        className="bg-gray-700 rounded-sm w-full h-8 " />
+                        className="bg-gray-700/40 border-1 border-gray-300/10 rounded-md w-full h-10 px-1 py-2 text-gray-100 focus:outline-none focus:ring-1 focus:ring-white/25 transition-all duration-100 placeholder:opacity-30" placeholder="Password" />
                         {errorMsg && (
                         <div className="mt-1 text-red-400 text-sm">
                             {errorMsg}
@@ -51,7 +56,7 @@ const Signup = () => {
                         )}
                     </div>
                     <button type="submit"
-                     className="bg-green-400 mt-10 w-full h-8 mt-2 rounded-md hover:cursor-grab hover:bg-green-500">
+                     className=" mt-12 bg-gradient-to-r from-green-500/90 to-emerald-500/90 hover:from-green-500/85 hover:to-emerald-500/85 active:from-green-500/80 active:to-emerald-500/80 transition-all duartion-75 border-gray- py-2 rounded-md hover:cursor-pointer w-full text-gray-200">
                         Sign Up
                     </button>
                 </form>

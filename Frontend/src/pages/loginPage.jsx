@@ -1,15 +1,17 @@
-import { useState } from "react";
 import zustandStore from "../misc/zustand.utility"
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
+import { useEffect,useState } from "react";
 
 const Login = () => {
 
+    const [firstLoad,setFirstLoad] = useState(false);
     const {setAuthUser} = zustandStore();
     const [password,setPassword] = useState('');
     const [email,setEmail] = useState('');
     const [errorMsg,setErrorMsg] = useState(null);
     const navigate = useNavigate();
+    useEffect(()=>{setFirstLoad(true)},[]);
 
     const loginFunction = async (e) => {
         e.preventDefault();
@@ -25,12 +27,11 @@ const Login = () => {
     }
 
     return(
-        
         <div className="bg-[url('./assets/bg6.jpg')] bg-cover bg-blend-multiply bg-black/70 bg-no-repeat text-white w-screen h-screen flex items-center justify-center relative ">
             <div className="absolute top-5 left-5">
                 <button className="transition-all duration-200 opacity-50 hover:opacity-80 hover:cursor-pointer font-bold" onClick={()=>navigate('/')}>&lt; Back</button>
             </div>
-            <div className="md:bg-white/8 backdrop-blur-2xl w-full md:w-2/5  md:h-fit p-10 rounded-4xl relative shadow-xl shadow-black/50 border-1 border-white/10">
+            <div className={`md:bg-white/8 backdrop-blur-2xl w-full md:w-2/5  md:h-fit p-10 rounded-4xl relative shadow-xl shadow-black/50 border-1 border-white/10 transition-opacity duration-600 ease-out ${firstLoad?"opacity-100":"opacity-0"} `}>
                 <form onSubmit={loginFunction} >
                     <div className="mb-5 ">
                         <label className="block opacity-70 mb-2 ">Email</label>
