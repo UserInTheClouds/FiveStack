@@ -40,27 +40,29 @@ const Chat = () => {
     };
 
     return (
-        <div className="flex h-screen bg-black text-white p-4">
-            <div className="flex w-full overflow-hidden rounded-2xl bg-stone-900 border border-stone-700 shadow-2xl">
+        <div className="flex h-screen bg-[#0B0F19] text-gray-100 p-2 sm:p-4 md:p-6 lg:p-8 font-sans">
+            <div className="flex w-full overflow-hidden rounded-3xl bg-[#111827]/80 backdrop-blur-xl border border-white/5 shadow-[0_0_40px_rgba(0,0,0,0.5)]">
                 
                 {/* SIDEBAR */}
-                <div className="w-1/4 border-r border-stone-700 bg-white/5 flex flex-col">
-                    <div className="p-4 border-b border-stone-700 flex justify-between items-center bg-stone-900">
-                        <span className="font-bold text-lg text-blue-400">FiveStack</span>
-                        <span className="text-xs text-gray-400">@{authUser?.username}</span>
+                <div className="w-1/3 max-w-[320px] lg:max-w-[400px] border-r border-white/5 bg-black/20 flex flex-col">
+                    <div className="p-5 border-b border-white/5 flex justify-between items-center bg-black/10">
+                    <span className="font-['Anton','sans-serif'] text-2xl tracking-wide select-none">
+                    Five<span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Stack</span>
+                    </span>
+                        <span className="text-xs font-medium text-gray-400 bg-white/5 px-2 py-1 rounded-full">@{authUser?.username}</span>
                     </div>
 
                     {/* Search Bar */}
-                    <div className="p-3 border-b border-stone-700 bg-stone-900/50">
-                        <form onSubmit={handleSearch} className="flex space-x-2">
+                    <div className="p-4 border-b border-white/5 bg-black/10">
+                        <form onSubmit={handleSearch} className="flex space-x-2 relative">
                             <input 
                                 type="text" 
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
                                 placeholder="Search usernames..." 
-                                className="flex-1 bg-stone-800 text-sm text-white rounded-lg px-3 py-2 outline-none focus:ring-1 focus:ring-blue-500"
+                                className="flex-1 bg-white/5 text-sm text-gray-200 rounded-xl pl-4 pr-16 py-2.5 outline-none border border-white/5 focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all placeholder:text-gray-500"
                             />
-                            <button type="submit" className="bg-blue-600 hover:bg-blue-500 text-white text-xs px-3 py-1 rounded-md transition cursor-pointer">
+                            <button type="submit" className="absolute right-1 top-1 bottom-1 bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 text-xs px-4 rounded-lg transition-colors cursor-pointer font-medium">
                                 Find
                             </button>
                         </form>
@@ -68,55 +70,85 @@ const Chat = () => {
 
                     <div className="flex-1 overflow-y-auto">
                         {users.length === 0 ? (
-                            <p className="text-gray-500 text-xs text-center mt-10 px-4 italic">No users found.</p>
+                            <div className="flex flex-col items-center justify-center h-full text-gray-500 opacity-70">
+                                <p className="text-sm">No users found.</p>
+                            </div>
                         ) : (
                             users.map((user) => (
                                 <div 
                                     key={user.id}
                                     onClick={() => setSelectedUser(user)}
-                                    className={`p-4 border-b border-stone-700/50 cursor-pointer transition-all ${
-                                        selectedUser?.id === user.id ? 'bg-blue-600/20 border-l-4 border-blue-500' : 'hover:bg-stone-700'
+                                    className={`p-4 flex items-center space-x-3 cursor-pointer transition-all border-b border-white/5 ${
+                                        selectedUser?.id === user.id ? 'bg-blue-500/10 border-l-4 border-l-blue-500' : 'hover:bg-white/5 border-l-4 border-l-transparent'
                                     }`}
                                 >
-                                    <div className="font-semibold">{user.username}</div>
-                                    <div className="text-[10px] text-gray-500 truncate">{user.email}</div>
+                                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500/20 to-blue-600/20 border border-white/10 flex items-center justify-center text-blue-300 font-bold uppercase shrink-0">
+                                        {user.username.charAt(0)}
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                        <div className="font-semibold text-gray-200 truncate">{user.username}</div>
+                                        <div className="text-[11px] text-gray-500 truncate">{user.email}</div>
+                                    </div>
                                 </div>
                             ))
                         )}
                     </div>
 
-                    <div className="p-4 border-t border-stone-700 bg-stone-900">
-                        <button onClick={() => logout()} className="w-full rounded bg-red-500/10 py-2 text-red-500 hover:bg-red-500 hover:text-white transition text-xs font-bold cursor-pointer">
-                            LOGOUT
+                    <div className="p-4 bg-black/20 mt-auto border-t border-white/5 flex items-center justify-between">
+                        <button 
+                            onClick={() => logout()} 
+                            className="w-10 h-10 flex items-center justify-center rounded-xl bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white transition-all cursor-pointer border border-red-500/20 hover:border-red-500 group"
+                            title="Log out"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+                            </svg>
                         </button>
                     </div>
                 </div>
 
                 {/* MAIN CHAT AREA */}
-                <div className="flex-1 flex flex-col bg-stone-950">
+                <div className="flex-1 flex flex-col relative bg-[#0B0F19]/40">
                     {!selectedUser ? (
                         <div className="flex-1 flex flex-col items-center justify-center text-center p-10">
-                            <div className="w-20 h-20 bg-stone-800 rounded-full mb-4 flex items-center justify-center text-3xl">👋</div>
-                            <h2 className="text-2xl font-bold text-gray-200">Select a conversation</h2>
-                            <p className="text-gray-500 max-w-xs">Search for a user above to start a new chat or pick a recent one.</p>
+                            <div className="w-24 h-24 bg-gradient-to-tr from-blue-500/20 to-purple-500/20 rounded-full mb-6 flex items-center justify-center border border-white/10">
+                             <div className="w-12 h-12 rounded-full border-t-2 border-l-2 border-blue-400 animate-pulse"></div>
+                            </div>
+                            <h2 className="text-2xl font-bold text-gray-200 mb-2">Connect with Friends</h2>
+                            <p className="text-gray-500 max-w-sm text-sm">Search for a user in the sidebar to start a new conversation or select from your recent chats.</p>
                         </div>
                     ) : (
                         <>
-                            <div className="p-4 border-b border-stone-700 bg-stone-900 flex items-center justify-between">
-                                <span className="font-bold text-lg">{selectedUser.username}</span>
-                                <span className="text-xs text-green-500 uppercase tracking-widest font-mono">online</span>
+                            <div className="px-6 py-4 border-b border-white/5 bg-black/10 flex items-center justify-between backdrop-blur-md sticky top-0 z-10">
+                                <div className="flex items-center space-x-3">
+                                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500/20 to-blue-600/20 border border-white/10 flex items-center justify-center text-blue-300 font-bold uppercase">
+                                        {selectedUser.username.charAt(0)}
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <span className="font-bold text-gray-100">{selectedUser.username}</span>
+                                        <span className="text-[10px] text-green-400 uppercase tracking-wider font-semibold flex items-center">
+                                            <span className="w-1.5 h-1.5 bg-green-400 rounded-full mr-1.5 animate-pulse"></span>
+                                            online
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div className="flex-1 p-4 overflow-y-auto flex flex-col space-y-3">
+                            <div className="flex-1 p-6 overflow-y-auto flex flex-col space-y-4">
                                 {messages.length === 0 ? (
-                                    <div className="flex-1 flex items-center justify-center text-gray-600 italic text-sm">No messages yet...</div>
+                                    <div className="flex-1 flex flex-col items-center justify-center text-gray-500 text-sm">
+                                        <div className="w-16 h-16 mb-4 opacity-20 bg-white/10 rounded-full flex items-center justify-center text-2xl">👋</div>
+                                        <p>Say hello to {selectedUser.username}!</p>
+                                    </div>
                                 ) : (
                                     messages.map((msg, index) => {
                                         const isMe = msg.senderId === authUser.id; 
                                         return (
-                                            <div key={index} className={`flex ${isMe ? 'justify-end' : 'justify-start'}`}>
-                                                <div className={`max-w-[75%] rounded-2xl px-4 py-2 text-sm shadow-sm ${
-                                                    isMe ? 'bg-blue-600 text-white rounded-br-none' : 'bg-stone-800 text-gray-200 rounded-bl-none'
+                                            <div key={index} className={`flex ${isMe ? 'justify-end' : 'justify-start'} group hover:opacity-100 transition-opacity`}>
+                                                <div className={`max-w-[75%] rounded-2xl px-5 py-3 text-[14px] leading-relaxed relative backdrop-blur-md ${
+                                                    isMe 
+                                                    ? 'bg-sky-500/40 shadow-[0_4px_15px_rgba(14,165,233,0.3)] text-white rounded-br-sm border border-sky-400/50' 
+                                                    : 'bg-white/5 shadow-[0_4px_15px_rgba(0,0,0,0.1)] text-gray-100 rounded-bl-sm border border-white/10'
                                                 }`}>
                                                     {msg.content}
                                                 </div>
@@ -126,18 +158,20 @@ const Chat = () => {
                                 )}
                             </div>
 
-                            <div className="p-4 bg-stone-900 border-t border-stone-700">
-                                <form onSubmit={handleSendMessage} className="flex space-x-2">
-                                    <input 
-                                        type="text" 
-                                        value={text}
-                                        onChange={(e) => setText(e.target.value)}
-                                        placeholder="Type your message..." 
-                                        className="flex-1 bg-stone-800 border border-stone-700 text-white rounded-xl px-4 py-2 outline-none focus:border-blue-500 transition-all"
-                                    />
+                            <div className="p-4 sm:p-5 bg-black/20 border-t border-white/5 backdrop-blur-sm">
+                                <form onSubmit={handleSendMessage} className="flex space-x-3">
+                                    <div className="flex-1 relative">
+                                        <input 
+                                            type="text" 
+                                            value={text}
+                                            onChange={(e) => setText(e.target.value)}
+                                            placeholder="Type a message..." 
+                                            className="w-full bg-white/5 border border-white/10 text-gray-100 rounded-2xl pl-5 pr-4 py-3.5 outline-none focus:border-sky-500/50 focus:bg-white/10 transition-all placeholder:text-gray-500 text-sm"
+                                        />
+                                    </div>
                                     <button 
                                         type="submit" 
-                                        className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-xl transition shadow-lg cursor-pointer"
+                                        className="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white/50 font-semibold py-3.5 px-6 rounded-2xl transition-all shadow-[0_4px_15px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_20px_rgba(0,0,0,0.2)] cursor-pointer active:scale-95 flex items-center justify-center min-w-[100px] border border-white/20 hover:border-white/30"
                                     >
                                         Send
                                     </button>
