@@ -71,7 +71,7 @@ export const receiveMessage = async (req,res)=>{
                         orderBy:{
                             createdAt:'asc'
                         }
-                    }
+                    },
                 }
             })
 

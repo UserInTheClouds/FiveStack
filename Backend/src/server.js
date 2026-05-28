@@ -23,7 +23,10 @@ app.set("userSocketMap",userSocketMap);
 
 sio.on('connection',(socket)=>{
     const userId = socket.handshake.query.userId;
-    if(userId) userSocketMap[userId] = socket.id;
+    if(userId){
+        userSocketMap[userId] = socket.id;
+        sio.emit("receiveOnlineUserList",Object.keys(userSocketMap));
+    }
     console.log(`User ${userId} is connected with socket id : ${socket.id}`);
     socket.on("sendMessage",(msgData)=>{
         socket.broadcast.emit('receiveMessage',msgData);
@@ -31,6 +34,7 @@ sio.on('connection',(socket)=>{
     socket.on('disconnect',()=>{
         console.log(`User ${userId} disconnected`);
         delete userSocketMap[userId];
+        sio.emit('receiveOnlineUserList',Object.keys(userSocketMap));
     })
 })
 

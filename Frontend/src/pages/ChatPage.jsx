@@ -4,14 +4,15 @@ import zustandStore from "../misc/zustand.utility";
 const Chat = () => {
     const { 
         authUser, logout, users, getUsers, 
-        selectedUser, setSelectedUser, 
+        selectedUser, setSelectedUser,onlineUsers, 
         messages, getMessages, sendMessages,
         searchUser,socket,connectSocket,disconnectSocket 
     } = zustandStore();
 
+    
     const [text, setText] = useState("");
     const [searchTerm, setSearchTerm] = useState("");
-
+    
     useEffect(() => {
         getUsers();
     }, [getUsers]);
@@ -21,6 +22,8 @@ const Chat = () => {
             getMessages(selectedUser.id);
         }
     }, [selectedUser, getMessages]);
+
+    const online_users = onlineUsers.filter(user=>user.id != authUser?.id);
 
     const handleSearch = async (e) => {
         e.preventDefault();
@@ -49,7 +52,7 @@ const Chat = () => {
                     <span className="font-['Anton','sans-serif'] text-2xl tracking-wide select-none">
                     Five<span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Stack</span>
                     </span>
-                        <span className="text-xs font-medium text-gray-400 bg-white/5 px-2 py-1 rounded-full">@{authUser?.username}</span>
+                        <span className="text-xs font-medium text-gray-400 bg-white/5 px-2 py-1 rounded-full">{authUser?.username}</span>
                     </div>
 
                     {/* Search Bar */}
@@ -87,7 +90,10 @@ const Chat = () => {
                                     </div>
                                     <div className="flex-1 min-w-0">
                                         <div className="font-semibold text-gray-200 truncate">{user.username}</div>
-                                        <div className="text-[11px] text-gray-500 truncate">{user.email}</div>
+                                        {online_users.includes(String(user.id)) &&                                         
+                                            <span className="text-[10px] text-green-400 uppercase tracking-wider font-semibold flex items-center">
+                                            online
+                                        </span>}
                                     </div>
                                 </div>
                             ))
@@ -126,10 +132,6 @@ const Chat = () => {
                                     </div>
                                     <div className="flex flex-col">
                                         <span className="font-bold text-gray-100">{selectedUser.username}</span>
-                                        <span className="text-[10px] text-green-400 uppercase tracking-wider font-semibold flex items-center">
-                                            <span className="w-1.5 h-1.5 bg-green-400 rounded-full mr-1.5 animate-pulse"></span>
-                                            online
-                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -143,8 +145,22 @@ const Chat = () => {
                                 ) : (
                                     messages.map((msg, index) => {
                                         const isMe = msg.senderId === authUser.id; 
+                                        const dateObj = new Date(msg.createdAt);
+                                        const day = dateObj.getDate();
+                                        const month = dateObj.toLocaleString('en-US', { month: 'short' }); // gets "Jan", "Feb", "May", etc.
+                                        const year = dateObj.getFullYear();
+
+                                        const messageDate = `${day} ${month}, ${year}`;
+                                        const messageTime = new Date(msg.createdAt).toLocaleTimeString([], { 
+                                        hour: '2-digit', 
+                                        minute: '2-digit' 
+                                         });
                                         return (
                                             <div key={index} className={`flex ${isMe ? 'justify-end' : 'justify-start'} group hover:opacity-100 transition-opacity`}>
+                                                {isMe &&                                                 
+                                                    <div className={`text-[10px] text-right px-1.5 pt-1 text-gray-400 font-semibold`}>
+                                                    {messageTime} <span className="px-1"></span> {messageDate}
+                                                </div> }
                                                 <div className={`max-w-[75%] rounded-2xl px-5 py-3 text-[14px] leading-relaxed relative backdrop-blur-md ${
                                                     isMe 
                                                     ? 'bg-sky-500/40 shadow-[0_4px_15px_rgba(14,165,233,0.3)] text-white rounded-br-sm border border-sky-400/50' 
@@ -152,6 +168,9 @@ const Chat = () => {
                                                 }`}>
                                                     {msg.content}
                                                 </div>
+                                                {!isMe && <div className={`pl-1 pt-1 font-semibold text-[10px] ${isMe?'text-sky-100/20 text-left':`text-gray-400 text-right`}`}>
+                                                    {messageTime} <span className="px-1"></span> {messageDate}
+                                                </div>}
                                             </div>
                                         );
                                     })

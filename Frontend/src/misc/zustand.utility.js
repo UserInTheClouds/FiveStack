@@ -7,6 +7,7 @@ const zustandStore = create((set,get)=>({
     socket:null,
     selectedUser:null,
     messages:[],
+    onlineUsers:[],
     users:[],
     isCheckingAuth:true,
     socket:null,
@@ -19,6 +20,9 @@ const zustandStore = create((set,get)=>({
         socket.on('connect',()=>{
             console.log("Connected to socket server");
         })
+        socket.on('receiveOnlineUserList',(userIds)=>{
+            set({onlineUsers:userIds});
+        })
         socket.on('newMessage',(message)=>{
             set((state)=>({messages:[...state.messages,message]}));
         });
@@ -28,7 +32,8 @@ const zustandStore = create((set,get)=>({
         const {socket} = get();
         if(socket){
             socket.disconnect();
-            set({socket:null});
+            socket.off('receiveOnlineUserList');
+            set({socket:null,onlineUsers:[]});
         }
     },
     checkAuth: async ()=>{
