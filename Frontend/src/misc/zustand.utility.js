@@ -68,10 +68,13 @@ const zustandStore = create((set,get)=>({
         }
     },
 
-    sendMessages: async (text) => {
+    sendMessages: async (text,image) => {
         try {
             const {messages, selectedUser} = zustandStore.getState();
-            const res = await axios.post(`/api/messages/send/${selectedUser.id}`,{text},{withCredentials:true});
+            const formdata = new FormData();
+            if(text) formdata.append('text',text);
+            if(image) formdata.append('image',image);
+            const res = await axios.post(`/api/messages/send/${selectedUser.id}`,formdata,{withCredentials:true});
             set({messages:[...messages,res.data]});      
         } catch (error) {
             console.log('Error in sending messages',error);

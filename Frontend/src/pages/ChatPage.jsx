@@ -12,6 +12,7 @@ const Chat = () => {
     
     const [text, setText] = useState("");
     const [searchTerm, setSearchTerm] = useState("");
+    const [image,setImage] = useState(null);
     
     useEffect(() => {
         getUsers();
@@ -37,9 +38,10 @@ const Chat = () => {
 
     const handleSendMessage = async (e) => {
         e.preventDefault();
-        if (!text.trim()) return; 
-        await sendMessages(text); 
+        if (!text.trim() && !image) return; 
+        await sendMessages(text, image); 
         setText(""); 
+        setImage(null);
     };
 
     return (
@@ -161,12 +163,13 @@ const Chat = () => {
                                                     <div className={`text-[10px] text-right px-1.5 pt-1 text-gray-400 font-semibold`}>
                                                     {messageTime} <span className="px-1"></span> {messageDate}
                                                 </div> }
-                                                <div className={`max-w-[75%] rounded-2xl px-5 py-3 text-[14px] leading-relaxed relative backdrop-blur-md ${
+                                                <div className={`max-w-[75%] flex flex-col rounded-2xl px-5 py-3 text-[14px] leading-relaxed relative backdrop-blur-md ${
                                                     isMe 
-                                                    ? 'bg-sky-500/40 shadow-[0_4px_15px_rgba(14,165,233,0.3)] text-white rounded-br-sm border border-sky-400/50' 
+                                                    ? msg.content && 'bg-sky-600/40 shadow-[0_4px_15px_rgba(14,165,233,0.3)] text-white rounded-br-sm' || (msg.image)
                                                     : 'bg-white/5 shadow-[0_4px_15px_rgba(0,0,0,0.1)] text-gray-100 rounded-bl-sm border border-white/10'
                                                 }`}>
-                                                    {msg.content}
+                                                    {msg.image && <img src={msg.image} alt="Attachment" className="max-w-full rounded-xl mb-2" />}
+                                                    {msg.content && <span>{msg.content}</span>}
                                                 </div>
                                                 {!isMe && <div className={`pl-1 pt-1 font-semibold text-[10px] ${isMe?'text-sky-100/20 text-left':`text-gray-400 text-right`}`}>
                                                     {messageTime} <span className="px-1"></span> {messageDate}
@@ -179,6 +182,20 @@ const Chat = () => {
 
                             <div className="p-4 sm:p-5 bg-black/20 border-t border-white/5 backdrop-blur-sm">
                                 <form onSubmit={handleSendMessage} className="flex space-x-3">
+                                    {image && (
+                                        <div className="absolute -top-10 left-4 text-xs bg-blue-500/20 text-blue-300 font-medium px-3 py-1.5 rounded-full flex items-center shadow-lg border border-blue-500/30">
+                                            {image.name} 
+                                            <button type="button" onClick={()=>setImage(null)} className="ml-2 text-blue-300 hover:text-red-400 font-bold transition-colors">✕</button>
+                                        </div>
+                                    )}
+                                    <div className="flex items-center space-x-2">
+                                        <input type="file" id="file-upload" accept="image/*" onChange={(e)=>setImage(e.target.files[0])} style={{display:"none"}} />
+                                    </div>
+                                    <label htmlFor="file-upload" className="p-2 bg-white/5 rounded-xl cursor-pointer hover:bg-white/10 transition-all flex items-center justify-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6 text-gray-400 hover:text-white">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M18.375 12.739l-7.693 7.693a4.5 4.5 0 01-6.364-6.364l10.94-10.94A3 3 0 1119.5 7.372L8.552 18.32m.009-.01l-.01.01m5.699-9.941l-7.81 7.81a1.5 1.5 0 002.112 2.13" />
+                                        </svg>
+                                    </label>
                                     <div className="flex-1 relative">
                                         <input 
                                             type="text" 

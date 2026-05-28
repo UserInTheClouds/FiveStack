@@ -3,7 +3,8 @@ import prisma from '../utilities/dbConnect.js'
 export const sendMessage = async (req,res)=>{
     try {
         const {text} = req.body;
-        if(!text){
+        const imageUrl = req.file?req.file.path:null;
+        if(!text && !imageUrl){
             return res.status(400).json('Message cannot be empty');
         }
         const receiverId = Number(req.params.id);
@@ -33,7 +34,8 @@ export const sendMessage = async (req,res)=>{
 
         const newMessage = await prisma.message.create({
             data:{
-                content:text,
+                content:text||null,
+                image:imageUrl,
                 senderId:senderId,
                 groupId:groupChat.id
             }
