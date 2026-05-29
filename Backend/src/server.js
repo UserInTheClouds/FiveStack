@@ -56,7 +56,7 @@ app.get('/',(req,res)=>{
 app.use('/api/auth',authRoute);
 app.use('/api/messages',messageRoute);
 
-httpServer.listen(process.env.port,"0.0.0.0",()=>{
+httpServer.listen(process.env.PORT,"0.0.0.0",()=>{
     try {
         console.log("Server is working at port",process.env.PORT);
     } catch (error) {
