@@ -5,14 +5,19 @@ import cookieParser from 'cookie-parser'
 import messageRoute from './routes/message.route.js'
 import {createServer} from 'http'
 import {Server} from 'socket.io'
+import cors from 'cors'
 dotenv.config();
 
 const app = express();
+app.use(cors({
+    origin:process.env.CLIENT_URL||"http://localhost:5173",
+    credentials:true
+}))
 const httpServer = createServer(app);
 
 const sio = new Server(httpServer,{
     cors:{
-        origin:"http://localhost:5173",
+        origin:process.env.CLIENT_URL||"http://localhost:5173",
         methods:['GET','POST']
     }
 })

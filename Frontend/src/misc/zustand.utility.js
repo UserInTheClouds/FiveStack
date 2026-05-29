@@ -2,6 +2,8 @@ import {create} from 'zustand'
 import axios from 'axios'
 import {io} from 'socket.io-client'
 
+axios.defaults.baseURL = import.meta.env.MODE === 'development'?'http://localhost:3000':'/';
+
 const zustandStore = create((set,get)=>({
     authUser:null,
     socket:null,
@@ -10,11 +12,11 @@ const zustandStore = create((set,get)=>({
     onlineUsers:[],
     users:[],
     isCheckingAuth:true,
-    socket:null,
+    baseURL : (import.meta.env.MODE === "development" ? "http://localhost:3000":'/'),
     connectSocket:()=>{
-        const {authUser} = get();
+        const {authUser,baseURL} = get();
         if(!authUser) return;
-        const socket = io("http://localhost:3000",{
+        const socket = io(baseURL,{
             query:{userId:authUser.id}
         });
         socket.on('connect',()=>{
