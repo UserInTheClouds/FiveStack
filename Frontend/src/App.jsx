@@ -13,7 +13,7 @@ function App() {
   const { authUser, isCheckingAuth, checkAuth, connectSocket, disconnectSocket } = zustandStore();
 
   useEffect(() => {
-    checkAuth(); // 👈 trigger auth check on mount
+    checkAuth(); 
   }, []);
 
   useEffect(()=>{

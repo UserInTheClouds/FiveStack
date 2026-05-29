@@ -17,6 +17,10 @@ model User {
   updatedAt DateTime @updatedAt
   messages Message[]
   groups Group[]
+  isVerified Boolean
+  hashedOTP String?
+  OTPExpiryTime DateTime?
+  OTP_failedattempts Int @default(0)
 }
 
 model Message{

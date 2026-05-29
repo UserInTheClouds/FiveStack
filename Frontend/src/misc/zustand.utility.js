@@ -99,7 +99,8 @@ const zustandStore = create((set,get)=>({
         } catch (error) {
             console.log("failed to log out",error);
         }
-    }
+    },
+
 }))
 
 export default zustandStore
