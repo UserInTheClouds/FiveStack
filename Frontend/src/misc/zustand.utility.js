@@ -2,7 +2,7 @@ import {create} from 'zustand'
 import axios from 'axios'
 import {io} from 'socket.io-client'
 
-axios.defaults.baseURL = import.meta.env.MODE === 'development'?'http://localhost:3000':'/';
+axios.defaults.baseURL = import.meta.env.MODE === 'development'?'http://localhost:3000':'https://fivestack-backend.onrender.com/';
 
 const zustandStore = create((set,get)=>({
     authUser:null,
@@ -12,7 +12,7 @@ const zustandStore = create((set,get)=>({
     onlineUsers:[],
     users:[],
     isCheckingAuth:true,
-    baseURL : (import.meta.env.MODE === "development" ? "http://localhost:3000":'/'),
+    baseURL : (import.meta.env.MODE === "development" ? "http://localhost:3000":'https://fivestack-backend.onrender.com/'),
     connectSocket:()=>{
         const {authUser,baseURL} = get();
         if(!authUser) return;
