@@ -10,15 +10,17 @@ dotenv.config();
 
 const app = express();
 app.use(cors({
-    origin:process.env.CLIENT_URL||"http://localhost:5173",
-    credentials:true
+    origin:"https://five-stack-five.vercel.app"||"http://localhost:5173",
+    credentials:true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
 }))
 const httpServer = createServer(app);
 
 const sio = new Server(httpServer,{
     cors:{
-        origin:process.env.CLIENT_URL||"http://localhost:5173",
-        methods:['GET','POST']
+        origin:"https://five-stack-five.vercel.app"||"http://localhost:5173",
+        methods:['GET','POST',"PUT"]
     }
 })
 
