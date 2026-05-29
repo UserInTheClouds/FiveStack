@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useRef } from "react";
 import zustandStore from "../misc/zustand.utility";
 
 const Chat = () => {
@@ -13,6 +13,10 @@ const Chat = () => {
     const [text, setText] = useState("");
     const [searchTerm, setSearchTerm] = useState("");
     const [image,setImage] = useState(null);
+    const messageRef = useRef(null);
+    useEffect(()=>{
+        messageRef.current?.scrollIntoView({behavior:'smooth'})
+    },[messages])
     
     useEffect(() => {
         getUsers();
@@ -44,11 +48,14 @@ const Chat = () => {
     };
 
     return (
-        <div className="flex h-screen bg-[#0B0F19] text-gray-100 p-2 sm:p-4 md:p-6 lg:p-8 font-sans">
-            <div className="flex w-full overflow-hidden rounded-3xl bg-[#111827]/80 backdrop-blur-xl border border-white/5 shadow-[0_0_40px_rgba(0,0,0,0.5)]">
+        <div className="relative flex h-screen bg-[#0B0F19] text-gray-100 p-2 sm:p-4 md:p-6 lg:p-8 font-sans overflow-hidden">
+   
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] md:bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none z-0"></div>
+
+            <div className="flex w-full overflow-hidden rounded-3xl bg-[#111827]/80 backdrop-blur-xl border border-white/5 shadow-[0_0_40px_rgba(0,0,0,0.5)] z-10 relative">
                 
-                {/* SIDEBAR */}
-                <div className="w-1/3 max-w-[320px] lg:max-w-[400px] border-r border-white/5 bg-black/20 flex flex-col">
+             
+                <div className={`${selectedUser ? 'hidden md:flex' : 'flex'} w-full md:w-1/3 md:max-w-[320px] lg:max-w-[400px] border-r border-white/5 bg-black/20 flex-col shrink-0`}>
                     <div className="p-5 border-b border-white/5 flex justify-between items-center bg-black/10">
                     <span className="font-['Anton','sans-serif'] text-2xl tracking-wide select-none">
                     Five<span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Stack</span>
@@ -56,7 +63,7 @@ const Chat = () => {
                         <span className="text-xs font-medium text-gray-400 bg-white/5 px-2 py-1 rounded-full">{authUser?.username}</span>
                     </div>
 
-                    {/* Search Bar */}
+                   
                     <div className="p-4 border-b border-white/5 bg-black/10">
                         <form onSubmit={handleSearch} className="flex space-x-2 relative">
                             <input 
@@ -114,25 +121,31 @@ const Chat = () => {
                     </div>
                 </div>
 
-                {/* MAIN CHAT AREA */}
-                <div className="flex-1 flex flex-col relative bg-[#0B0F19]/40">
+              
+                <div className={`${!selectedUser ? 'hidden md:flex' : 'flex'} flex-1 flex-col relative bg-[#0B0F19]/40 w-full`}>
                     {!selectedUser ? (
-                        <div className="flex-1 flex flex-col items-center justify-center text-center p-10">
-                            <div className="w-24 h-24 bg-gradient-to-tr from-blue-500/20 to-purple-500/20 rounded-full mb-6 flex items-center justify-center border border-white/10">
-                             <div className="w-12 h-12 rounded-full border-t-2 border-l-2 border-blue-400 animate-pulse"></div>
-                            </div>
+                        <div className="flex-1 flex flex-col items-center justify-center text-center p-10 hidden md:flex">
                             <h2 className="text-2xl font-bold text-gray-200 mb-2">Connect with Friends</h2>
                             <p className="text-gray-500 max-w-sm text-sm">Search for a user in the sidebar to start a new conversation or select from your recent chats.</p>
                         </div>
                     ) : (
                         <>
-                            <div className="px-6 py-4 border-b border-white/5 bg-black/10 flex items-center justify-between backdrop-blur-md sticky top-0 z-10">
-                                <div className="flex items-center space-x-3">
-                                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500/20 to-blue-600/20 border border-white/10 flex items-center justify-center text-blue-300 font-bold uppercase">
+                            <div className="px-3 md:px-6 py-4 border-b border-white/5 bg-black/10 flex items-center justify-between backdrop-blur-md sticky top-0 z-10 w-full">
+                                <div className="flex items-center space-x-2 md:space-x-3 w-full">
+                                    <button 
+                                        className="md:hidden text-gray-400 hover:text-white mr-1 p-2 rounded-full hover:bg-white/5 transition-colors cursor-pointer flex items-center justify-center shrink-0"
+                                        onClick={() => setSelectedUser(null)}
+                                        title="Back to Users"
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                                        </svg>
+                                    </button>
+                                    <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-cyan-500/20 to-blue-600/20 border border-white/10 flex items-center justify-center text-blue-300 font-bold uppercase shrink-0">
                                         {selectedUser.username.charAt(0)}
                                     </div>
-                                    <div className="flex flex-col">
-                                        <span className="font-bold text-gray-100">{selectedUser.username}</span>
+                                    <div className="flex flex-col min-w-0">
+                                        <span className="font-bold text-gray-100 truncate">{selectedUser.username}</span>
                                     </div>
                                 </div>
                             </div>
@@ -173,6 +186,7 @@ const Chat = () => {
                                                 {!isMe && <div className={`pl-1 pt-1 font-semibold text-[10px] ${isMe?'text-sky-100/20 text-left':`text-gray-400 text-right`}`}>
                                                     {messageTime} <span className="px-1"></span> {messageDate}
                                                 </div>}
+                                                <div ref={messageRef} />
                                             </div>
                                         );
                                     })

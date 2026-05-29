@@ -48,12 +48,15 @@ const ForgotPassword = () => {
     };
 
     return (
-        <div className="bg-[url('./assets/bg6.jpg')] bg-cover bg-blend-multiply bg-black/70 bg-no-repeat text-white w-screen h-screen flex items-center justify-center relative ">
-            <div className="absolute top-5 left-5">
+        <div className="relative bg-[#0B0F19] min-h-screen w-full text-white flex items-center justify-center overflow-x-hidden">
+            {/* Grid Background Pattern */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] md:bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none z-0"></div>
+
+            <div className="absolute top-5 left-5 z-10">
                 <button className="transition-all duration-200 opacity-50 hover:opacity-80 hover:cursor-pointer font-bold" onClick={() => navigate('/login')}>&lt; Back</button>
             </div>
             
-            <div className={`md:bg-white/8 backdrop-blur-2xl w-full md:w-2/5 md:h-fit p-10 rounded-4xl relative shadow-xl shadow-black/50 border-1 border-white/10 transition-opacity duration-600 ease-out ${firstLoad ? "opacity-100" : "opacity-0"} `}>
+            <div className={`md:bg-[#111827]/80 backdrop-blur-2xl w-full md:w-2/5 md:h-fit p-10 rounded-4xl relative z-10 shadow-[0_0_40px_rgba(0,0,0,0.5)] border border-white/5 transition-opacity duration-600 ease-out ${firstLoad ? "opacity-100" : "opacity-0"} `}>
                 
                 {!isOtpSent ? (
                     <form onSubmit={handleRequestOtp}>
