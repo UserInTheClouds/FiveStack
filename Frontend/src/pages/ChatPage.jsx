@@ -28,7 +28,6 @@ const Chat = () => {
 
     const handleSearch = async (e) => {
         e.preventDefault();
-        // If search is empty, just refresh the recent chats list
         if (!searchTerm.trim()) {
             await getUsers();
             return;

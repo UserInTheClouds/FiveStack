@@ -6,6 +6,7 @@ import Login from './pages/loginPage.jsx'
 import Signup from './pages/signupPage.jsx'
 import Chat from './pages/ChatPage.jsx'
 import Landing from './pages/LandingPage.jsx'
+import ForgotPassword from './pages/forgotPasswordPage.jsx';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -33,6 +34,7 @@ function App() {
         <Route path='/chat' element={authUser?<Chat/>:<Navigate to='/'/>} />
         <Route path='/login' element={!authUser?<Login/>:<Navigate to='/chat'/>} />
         <Route path='/signup' element={!authUser?<Signup/>:<Navigate to='/chat'/>} />
+        <Route path='/forgot-password' element={!authUser ? <ForgotPassword/> : <Navigate to='/chat'/>} />
     </Routes>
   )
 }

@@ -133,3 +133,58 @@ export const verifyRoute = async(req,res)=>{
         return res.status(500).json({message:"Error in verification"});
     }
 }
+
+export const forgotPasswordRoute = async (req, res) => {
+    try {
+        const { email } = req.body;
+        if (!email) return res.status(400).json({ message: "Email is required" });
+
+        const existingUser = await prisma.user.findUnique({ where: { email } });
+        if (!existingUser) {
+            return res.status(404).json({ message: "User with this email not found" });
+        }
+
+        await generate_send_otp(email);
+        return res.status(200).json({ message: "OTP sent to your email" });
+    } catch (error) {
+        console.log("Error in forgotPasswordRoute", error);
+        return res.status(500).json({ message: "Server error" });
+    }
+};
+
+export const resetPasswordRoute = async (req, res) => {
+    try {
+        const { email, otp, newPassword } = req.body;
+        
+        if (!email || !otp || !newPassword) {
+            return res.status(400).json({ message: "Email, OTP, and New Password are required" });
+        }
+        if (newPassword.length < 8) {
+            return res.status(400).json({ message: "Password must be at least 8 characters long" });
+        }
+
+        const result = await verifyOTP(email, otp);
+        if (!result.success) {
+            return res.status(400).json({ message: result.message });
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+        await prisma.user.update({
+            where: { email },
+            data: { password: hashedPassword }
+        });
+
+        genToken(result.user.id, res);
+        return res.status(200).json({
+            id: result.user.id,
+            username: result.user.username,
+            email: result.user.email
+        });
+
+    } catch (error) {
+        console.log("Error in resetPasswordRoute", error);
+        return res.status(500).json({ message: "Server error" });
+    }
+};

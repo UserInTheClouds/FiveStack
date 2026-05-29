@@ -59,6 +59,14 @@ const Login = () => {
                             <label className="block opacity-70 mb-2 ">Password</label>
                             <input type="password" value={password} required onChange={(e)=>setPassword(e.target.value)}
                             className="bg-gray-700/40 rounded-md w-full h-10 px-1 py-2 focus:outline-none focus:ring-1 focus:ring-white/25 transition-all duration-100 placeholder:opacity-30 " placeholder="Password" />
+                            
+                            {/* Forgot Password Link */}
+                            <div className="flex justify-end mt-2">
+                                <button type="button" onClick={() => navigate('/forgot-password')} className="text-sm text-cyan-400 hover:text-cyan-300 transition-colors bg-transparent border-none p-0 cursor-pointer">
+                                    Forgot Password?
+                                </button>
+                            </div>
+
                             {errorMsg && (
                             <div className="mt-1 text-red-400 text-sm">
                                 {errorMsg}

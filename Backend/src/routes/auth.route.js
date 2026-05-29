@@ -1,5 +1,5 @@
 import express from 'express'
-import { signupRoute,loginRoute,checkRoute,logoutRoute,verifyRoute } from '../controllers/auth.controller.js';
+import { signupRoute,loginRoute,checkRoute,logoutRoute,verifyRoute,forgotPasswordRoute,resetPasswordRoute } from '../controllers/auth.controller.js';
 import protectRoute from '../middlewares/protectRoute.js'
 
 const router = express.Router();
@@ -9,5 +9,7 @@ router.post('/login',loginRoute);
 router.post('/logout',logoutRoute);
 router.get('/check',protectRoute,checkRoute);
 router.post('/verifyotp',verifyRoute);
+router.post('/forgot-password',forgotPasswordRoute);
+router.post('/reset-password',resetPasswordRoute);
 
 export default router
