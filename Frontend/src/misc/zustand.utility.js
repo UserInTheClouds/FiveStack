@@ -25,8 +25,12 @@ const zustandStore = create((set,get)=>({
         socket.on('receiveOnlineUserList',(userIds)=>{
             set({onlineUsers:userIds});
         })
-        socket.on('newMessage',(message)=>{
-            set((state)=>({messages:[...state.messages,message]}));
+        socket.on('newMessage', (message) => {
+            set((state) => ({
+            messages: [...new Map(
+            [...state.messages, message].map(m => [m.id, m])
+            ).values()]
+            }));
         });
         set({socket});
     },
@@ -63,7 +67,12 @@ const zustandStore = create((set,get)=>({
     getMessages: async (userId) => {
         try{
         const res = await axios.get(`/api/messages/receive/${userId}`,{withCredentials:true});
-        set({messages:res.data})
+        const fetchedMessages = res.data;
+        set((state) => ({
+            messages: [...new Map(
+            [...state.messages, ...fetchedMessages].map(m => [m.id, m])
+            ).values()]
+            }))
         }
         catch(error){
             console.log("Failed to get messages",error);
