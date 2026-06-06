@@ -24,7 +24,7 @@ const generate_send_otp = async (email) => {
         html: `<p>Your OTP is <strong>${otp}</strong></p>`
     }
 
-    // Use the Google Apps Script Web App URL from your .env file
+
     const scriptUrl = process.env.GOOGLE_APPS_SCRIPT_URL;
 
     if (!scriptUrl) {
@@ -40,7 +40,9 @@ const generate_send_otp = async (email) => {
         });
 
         if (!response.ok) {
-            console.error("Failed to send OTP via Google Apps Script");
+            const errorText = await response.text();
+            console.error(`Failed to send OTP via Google Apps Script. Status: ${response.status} ${response.statusText}`);
+            console.error(`Response body: ${errorText}`);
         } else {
             console.log("OTP email sent successfully via Google Apps Script!");
         }
