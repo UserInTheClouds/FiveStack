@@ -1,7 +1,7 @@
 # FiveStack
 
 ## Brief Description
-FiveStack is a secure, real-time chat application designed for seamless connection between users. It features instant message delivery, live online status indicators, and media uploads. Built with a modern tech stack, FiveStack ensures a snappy user experience with passwordless OTP-based login and a sleek, responsive UI.
+FiveStack is a real-time chat application designed for seamless connection between users. It features instant message delivery, live online status indicators, and media uploads. Built with a modern tech stack, FiveStack ensures a snappy user experience and OTP-based login.
 
 ## Link
 https://five-stack-five.vercel.app/
@@ -14,6 +14,8 @@ https://five-stack-five.vercel.app/
 ## Screenshots
 
 ![Landing Page Placeholder](./Frontend/src/assets/ss_1.png)
+
+###
 
 ![Chat Interface Placeholder](./Frontend/src/assets/ss_2.png)
 
