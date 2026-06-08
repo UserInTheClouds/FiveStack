@@ -239,11 +239,17 @@ export const refreshTokenRoute = async (req, res) => {
                 data: { hashedRefreshToken: null }
             })
             res.cookie('accessToken', '', {
-                maxAge: 0
-            })
+                maxAge: 0,
+                httpOnly: true,
+                sameSite: process.env.DEVSTATUS !== "DEVELOPMENT" ? 'none' : 'lax',
+                secure: process.env.DEVSTATUS !== "DEVELOPMENT"
+            });
             res.cookie('refreshToken', '', {
-                maxAge: 0
-            })
+                maxAge: 0,
+                httpOnly: true,
+                sameSite: process.env.DEVSTATUS !== "DEVELOPMENT" ? 'none' : 'lax',
+                secure: process.env.DEVSTATUS !== "DEVELOPMENT"
+            });
             return res.status(401).json({
                 message: "Session might be compromised. Please log in again."
             })
