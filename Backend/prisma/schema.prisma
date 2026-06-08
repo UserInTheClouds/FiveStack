@@ -21,6 +21,7 @@ model User {
   hashedOTP String?
   OTPExpiryTime DateTime?
   OTP_failedattempts Int @default(0)
+  hashedRefreshToken String?
 }
 
 model Message{

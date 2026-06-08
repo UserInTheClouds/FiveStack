@@ -19,7 +19,7 @@ const httpServer = createServer(app);
 
 const sio = new Server(httpServer, {
     cors: {
-        origin: "https://five-stack-five.vercel.app" || "http://localhost:5173",
+        origin: ["https://five-stack-five.vercel.app", "http://localhost:5173"],
         methods: ['GET', 'POST', "PUT"]
     }
 })

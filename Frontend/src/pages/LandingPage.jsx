@@ -5,7 +5,7 @@ const Landing = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="relative bg-[#0B0F19] min-h-screen w-full text-white flex flex-col">
+        <div className="relative bg-gray-950/95 min-h-screen w-full text-white flex flex-col">
 
             <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] md:bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none z-0"></div>
 
@@ -28,9 +28,9 @@ const Landing = () => {
                         <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Connect With Friends</span>
                     </span>
                     <p className="text-gray-300 mt-6 text-lg tracking-wide md:text-xl font-medium px-4 lg:px-0">
-                        Just a secure, real-time connection between two people, featuring instant message delivery and seamless media uploads. No noisy channels, no unnecessary bloat.
+                        Just secure, real-time connection between people, featuring instant message delivery and seamless media uploads. No noisy channels, no unnecessary bloat.
                     </p>
-                    <button className="mt-8 font-bold text-lg bg-gradient-to-r from-cyan-400 to-blue-500 rounded-md px-8 py-3 hover:from-cyan-500 hover:to-blue-600 active:from-cyan-400 active:to-blue-500 hover:cursor-pointer active:bg-white shadow-lg transition-transform hover:-translate-y-1" onClick={() => navigate('/signup')} >Get Started</button>
+                    <button className="mt-8 font-bold text-lg bg-gradient-to-r from-cyan-400 to-blue-500 rounded-md px-8 py-3 hover:from-cyan-500 hover:to-blue-600 active:from-cyan-400 active:to-blue-500 hover:cursor-pointer active:bg-white shadow-lg transition-transform hover:-translate-y-0.5" onClick={() => navigate('/signup')} >Get Started</button>
                 </div>
 
 
@@ -77,60 +77,15 @@ const Landing = () => {
                                 <span className="text-[10px] text-gray-500 mt-1 opacity-70 whitespace-nowrap shrink-0">10:44 AM</span>
                             </div>
 
-    
+
                             <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-[#111827] to-transparent"></div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div className="w-full max-w-[1400px] mx-auto px-4 md:px-10 lg:px-20 py-24 z-10 relative">
-                <div className="text-center mb-16">
-                    <h2 className="text-3xl md:text-5xl font-bold font-sans">
-                        <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Key Features</span>
-                    </h2>
-                    <p className="text-gray-400 mt-4 text-lg">Built with modern tech for a seamless experience.</p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-             
-                    <div className="bg-[#111827]/80 backdrop-blur-md border border-white/5 rounded-2xl p-8 hover:-translate-y-2 transition-transform duration-300 shadow-xl">
-                        <div className="w-12 h-12 bg-cyan-500/20 rounded-xl flex items-center justify-center mb-6 border border-cyan-500/30">
-                            <svg className="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                            </svg>
-                        </div>
-                        <h3 className="text-xl font-bold mb-3 text-gray-100">Secure OTP Login</h3>
-                        <p className="text-gray-400">Stateless and quick authentication. Check your email for a secure 6-digit code to log in instantly without a password.</p>
-                    </div>
-
-              
-                    <div className="bg-[#111827]/80 backdrop-blur-md border border-white/5 rounded-2xl p-8 hover:-translate-y-2 transition-transform duration-300 shadow-xl">
-                        <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mb-6 border border-blue-500/30">
-                            <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-                            </svg>
-                        </div>
-                        <h3 className="text-xl font-bold mb-3 text-gray-100">Live Messaging</h3>
-                        <p className="text-gray-400">Instantly see when your friends are online and chat in real-time without refreshing the page.</p>
-                    </div>
-
-           
-                    <div className="bg-[#111827]/80 backdrop-blur-md border border-white/5 rounded-2xl p-8 hover:-translate-y-2 transition-transform duration-300 shadow-xl">
-                        <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center mb-6 border border-purple-500/30">
-                            <svg className="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                            </svg>
-                        </div>
-                        <h3 className="text-xl font-bold mb-3 text-gray-100">Media</h3>
-                        <p className="text-gray-400">Share your favorite moments. Seamlessly upload and send photos to your friends directly in the chat.</p>
-                    </div>
-                </div>
-            </div>
-
-       
             <footer className="w-full relative pb-6 pt-12 mt-auto flex justify-center text-sm text-gray-400">
-         
+
                 <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
                 <div className="z-10">
                     Contact at<a href="mailto:FiveStack56@gmail.com" className="ml-1 text-cyan-400 hover:text-cyan-300 transition-colors border-b border-cyan-400/30 hover:border-cyan-300/80 pb-0.5">FiveStack56@gmail.com</a>
