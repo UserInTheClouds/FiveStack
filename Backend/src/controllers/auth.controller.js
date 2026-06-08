@@ -108,10 +108,16 @@ export const logoutRoute = async (req, res) => {
             }
         }
         res.cookie('accessToken', '', {
-            maxAge: 0
-        })
+            maxAge: 0,
+            httpOnly: true,
+            sameSite: process.env.DEVSTATUS !== "DEVELOPMENT" ? 'none' : 'lax',
+            secure: process.env.DEVSTATUS !== "DEVELOPMENT"
+        });
         res.cookie('refreshToken', '', {
-            maxAge: 0
+            maxAge: 0,
+            httpOnly: true,
+            sameSite: process.env.DEVSTATUS !== "DEVELOPMENT" ? 'none' : 'lax',
+            secure: process.env.DEVSTATUS !== "DEVELOPMENT"
         });
         return res.status(200).json({ message: "Logged out successfully" });
     } catch (error) {
