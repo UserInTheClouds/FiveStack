@@ -56,7 +56,7 @@ const Landing = () => {
 
                             <div className="max-w-[75%] md:max-w-[60%] flex items-start gap-2 w-full self-start">
                                 <div className="rounded-2xl p-3 bg-white/5 backdrop-blur-sm border border-white/5 text-gray-200 shadow-sm rounded-tl-sm w-fit relative group">
-                                    Man, We were supposed to get GTA 6 by now
+                                    Hey, what are you playing nowadays
                                 </div>
                                 <span className="text-[10px] text-gray-500 mt-1 opacity-70 whitespace-nowrap shrink-0">10:41 AM</span>
                             </div>
@@ -64,7 +64,7 @@ const Landing = () => {
 
                             <div className="max-w-[75%] md:max-w-[60%] flex flex-row-reverse items-start gap-2 w-full self-end">
                                 <div className="rounded-2xl p-3 bg-sky-600/40 shadow-[0_4px_15px_rgba(14,165,233,0.3)] text-white backdrop-blur-md rounded-br-sm w-fit relative group">
-                                    Still it's unbelievable that the wait is almost over
+                                    Recently I tried Hollow Knight, its nearly perfect, from gameplay to the music and lore.
                                 </div>
                                 <span className="text-[10px] text-gray-500 mt-1 opacity-70 whitespace-nowrap shrink-0">10:43 AM</span>
                             </div>
@@ -72,11 +72,10 @@ const Landing = () => {
 
                             <div className="max-w-[75%] md:max-w-[60%] flex items-start gap-2 w-full self-start">
                                 <div className="rounded-2xl p-3 bg-white/5 backdrop-blur-sm border border-white/5 text-gray-200 shadow-sm rounded-tl-sm w-fit relative group">
-                                    It better be a generational game
+                                    Sounds like I should try it.
                                 </div>
                                 <span className="text-[10px] text-gray-500 mt-1 opacity-70 whitespace-nowrap shrink-0">10:44 AM</span>
                             </div>
-
 
                             <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-[#111827] to-transparent"></div>
                         </div>
