@@ -13,7 +13,7 @@ import { doubleCsrf } from "csrf-csrf";
 dotenv.config();
 
 const {
-    generateToken,
+    generateCsrfToken,
     doubleCsrfProtection,
 } = doubleCsrf({
     getSecret: () => process.env.ACCESS_TOKEN_SECRET,
@@ -24,9 +24,13 @@ const {
     },
     size: 64,
     ignoredMethods: ["GET", "HEAD", "OPTIONS"],
+    getSessionIdentifier: () => "stateless",
 });
 
 const app = express();
+
+app.set('trust proxy', 1);
+
 app.use(cors({
     origin: ["https://five-stack-five.vercel.app", "http://localhost:5173"],
     credentials: true,
@@ -38,7 +42,8 @@ const httpServer = createServer(app);
 const sio = new Server(httpServer, {
     cors: {
         origin: ["https://five-stack-five.vercel.app", "http://localhost:5173"],
-        methods: ['GET', 'POST', "PUT"]
+        methods: ['GET', 'POST', "PUT"],
+        credentials: true
     }
 })
 
@@ -104,7 +109,7 @@ const authLimiter = rateLimit({
 });
 
 app.get("/api/csrf-token", (req, res) => {
-    const csrfToken = generateToken(res, req);
+    const csrfToken = generateCsrfToken(req, res);
     res.json({ csrfToken });
 });
 

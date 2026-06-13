@@ -70,7 +70,8 @@ const zustandStore = create((set, get) => ({
         const { authUser, baseURL } = get();
         if (!authUser) return;
         const socket = io(baseURL, {
-            query: { userId: authUser.id }
+            query: { userId: authUser.id },
+            withCredentials: true
         });
         socket.on('connect', () => {
             console.log("Connected to socket server");
