@@ -14,9 +14,10 @@ ReactGA.initialize("G-SJ7NDM2L7H");
 function App() {
   const [count, setCount] = useState(0);
 
-  const { authUser, isCheckingAuth, checkAuth, connectSocket, disconnectSocket } = zustandStore();
+  const { authUser, isCheckingAuth, checkAuth, connectSocket, disconnectSocket, initCsrf } = zustandStore();
 
   useEffect(() => {
+    initCsrf();
     checkAuth();
   }, []);
 

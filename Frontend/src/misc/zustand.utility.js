@@ -64,6 +64,7 @@ const zustandStore = create((set, get) => ({
     onlineUsers: [],
     users: [],
     isCheckingAuth: true,
+
     baseURL: (import.meta.env.MODE === "development" ? "http://localhost:3000" : 'https://fivestack-backend.onrender.com/'),
     connectSocket: () => {
         const { authUser, baseURL } = get();
@@ -92,6 +93,15 @@ const zustandStore = create((set, get) => ({
             socket.disconnect();
             socket.off('receiveOnlineUserList');
             set({ socket: null, onlineUsers: [] });
+        }
+    },
+
+    initCsrf: async () => {
+        try {
+            const res = await axios.get('/api/csrf-token', { withCredentials: true });
+            axios.defaults.headers.common['x-csrf-token'] = res.data.csrfToken;
+        } catch (error) {
+            console.log("Failed to fetch CSRF token", error);
         }
     },
     checkAuth: async () => {

@@ -55,7 +55,7 @@ export const signupRoute = async (req, res) => {
         }
     } catch (error) {
         console.log("error in signup controller", error);
-        return res.status(500).json({ message: error.message });
+        return res.status(500).json({ message: "Internal server error" });
     }
 }
 
@@ -86,7 +86,7 @@ export const loginRoute = async (req, res) => {
 
     } catch (error) {
         console.log('Error in Login controller', error);
-        return res.status(500).json({ message: error.message });
+        return res.status(500).json({ message: "Internal server error" });
     }
 }
 
@@ -122,7 +122,7 @@ export const logoutRoute = async (req, res) => {
         return res.status(200).json({ message: "Logged out successfully" });
     } catch (error) {
         console.log("Error in logout controller", error);
-        return res.status(500).json({ message: error.message });
+        return res.status(500).json({ message: "Internal server error" });
     }
 }
 
@@ -132,7 +132,7 @@ export const checkRoute = async (req, res) => {
 
     } catch (error) {
         console.log('Error in checkRoute', error);
-        return res.status(500).json({ message: error.message });
+        return res.status(500).json({ message: "Internal server error" });
     }
 }
 
