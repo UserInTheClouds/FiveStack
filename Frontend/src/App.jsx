@@ -30,7 +30,7 @@ function App() {
     }
   }, [authUser, connectSocket, disconnectSocket]);
 
-  if (isCheckingAuth) return <div className='bg-black w-screen h-screen text-white flex items-center justify-center text-4xl' >Loading...</div>;
+  if (isCheckingAuth) return <div className='bg-slate-900 w-screen h-screen text-white flex items-center justify-center text-4xl' ></div>;
 
   return (
     <Routes>
