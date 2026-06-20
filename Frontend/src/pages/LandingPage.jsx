@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom"
+import { motion } from 'framer-motion'
 
 const Landing = () => {
 
@@ -9,7 +10,8 @@ const Landing = () => {
 
             <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] md:bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none z-0"></div>
 
-            <header className="w-full h-18 relative flex items-center opacity-92 shrink-0 z-10">
+            <motion.header initial={{ opacity: 0.15, y: -1 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}
+                className="w-full h-18 relative flex items-center opacity-92 shrink-0 z-10">
                 <span className="absolute left-12 hover:cursor-pointer font-['Anton','sans-serif'] scale-x-175 scale-y-150 bg-gradient-to-r from-gray-200 to-cyan-300 bg-clip-text text-transparent">
                     Five<span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Stack</span>
                 </span>
@@ -19,10 +21,11 @@ const Landing = () => {
                 <button className="right-10 absolute bg-white text-black rounded-md px-5 py-1 font-bold hover:bg-gray-200 hover:cursor-pointer active:bg-white" onClick={() => navigate('/login')}>
                     Log In
                 </button>
-            </header>
+            </motion.header>
 
             <div className="flex flex-col lg:flex-row items-center justify-center lg:justify-between flex-grow mt-20 px-4 md:px-10 lg:px-20 w-full max-w-[1400px] mx-auto gap-12">
-                <div className="p-5 justify-center text-center lg:text-left items-center lg:items-start flex flex-col opacity-95 max-w-2xl lg:w-1/2">
+                <motion.div initial={{ opacity: 0.15, y: -1 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}
+                    className="p-5 justify-center text-center lg:text-left items-center lg:items-start flex flex-col opacity-95 max-w-2xl lg:w-1/2">
                     <span className="font-extrabold font-sans text-4xl md:text-6xl leading-tight block">
                         <span className="">Your own space to</span> <br />
                         <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Connect With Friends</span>
@@ -31,10 +34,11 @@ const Landing = () => {
                         Just secure, real-time connection between people, featuring instant message delivery and seamless media uploads. No noisy channels, no unnecessary bloat.
                     </p>
                     <button className="mt-8 font-bold text-lg bg-gradient-to-r from-cyan-400 to-blue-500 rounded-md px-8 py-3 hover:from-cyan-500 hover:to-blue-600 active:from-cyan-400 active:to-blue-500 hover:cursor-pointer active:bg-white shadow-lg transition-transform hover:-translate-y-0.5" onClick={() => navigate('/signup')} >Get Started</button>
-                </div>
+                </motion.div>
 
 
-                <div className="mt-10 lg:mt-0 w-full lg:w-1/2 max-w-2xl opacity-90 mb-10">
+                <motion.div initial={{ opacity: 0.15, y: -1 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}
+                    className="mt-10 lg:mt-0 w-full lg:w-1/2 max-w-2xl opacity-90 mb-10">
                     <div className="bg-[#111827] backdrop-blur-xl border border-white/5 rounded-3xl shadow-2xl flex flex-col overflow-hidden h-[400px] shadow-[0_0_40px_rgba(0,0,0,0.5)]">
 
                         <div className="h-14 bg-black/10 border-b border-white/5 flex items-center px-4 md:px-6">
@@ -80,16 +84,17 @@ const Landing = () => {
                             <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-[#111827] to-transparent"></div>
                         </div>
                     </div>
-                </div>
+                </motion.div>
             </div>
 
-            <footer className="w-full relative pb-6 pt-12 mt-auto flex justify-center text-sm text-gray-400">
+            <motion.footer initial={{ opacity: 0.15, y: -1 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}
+                className="w-full relative pb-6 pt-12 mt-auto flex justify-center text-sm text-gray-400/75">
 
                 <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
                 <div className="z-10">
                     Contact at<a href="mailto:FiveStack56@gmail.com" className="ml-1 text-cyan-400 hover:text-cyan-300 transition-colors border-b border-cyan-400/30 hover:border-cyan-300/80 pb-0.5">FiveStack56@gmail.com</a>
                 </div>
-            </footer>
+            </motion.footer>
         </div>
     )
 }
