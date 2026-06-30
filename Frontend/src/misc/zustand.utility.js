@@ -75,6 +75,10 @@ const zustandStore = create((set, get) => ({
         });
         socket.on('connect', () => {
             console.log("Connected to socket server");
+            const { selectedUser, getMessages } = get();
+            if (selectedUser) {
+                getMessages(selectedUser.id);
+            }
         })
         socket.on('receiveOnlineUserList', (userIds) => {
             set({ onlineUsers: userIds });

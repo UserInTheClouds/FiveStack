@@ -19,8 +19,8 @@ const {
     getSecret: () => process.env.ACCESS_TOKEN_SECRET,
     cookieName: "x-csrf-token",
     cookieOptions: {
-        sameSite: process.env.DEVSTATUS !== "DEVELOPMENT" ? 'none' : 'lax',
-        secure: process.env.DEVSTATUS !== "DEVELOPMENT"
+        sameSite: (process.env.NODE_ENV === "production" || process.env.DEVSTATUS !== "DEVELOPMENT") ? 'none' : 'lax',
+        secure: (process.env.NODE_ENV === "production" || process.env.DEVSTATUS !== "DEVELOPMENT")
     },
     size: 64,
     ignoredMethods: ["GET", "HEAD", "OPTIONS"],
@@ -37,6 +37,7 @@ app.use(cors({
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization", "x-csrf-token"]
 }))
+
 const httpServer = createServer(app);
 
 const sio = new Server(httpServer, {
@@ -83,9 +84,6 @@ sio.on('connection', (socket) => {
         sio.emit("receiveOnlineUserList", Object.keys(userSocketMap));
     }
     console.log(`User ${userId} is connected with socket id : ${socket.id}`);
-    socket.on("sendMessage", (msgData) => {
-        socket.broadcast.emit('receiveMessage', msgData);
-    })
     socket.on('disconnect', () => {
         console.log(`User ${userId} disconnected`);
         delete userSocketMap[userId];

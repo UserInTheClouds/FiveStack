@@ -107,17 +107,18 @@ export const logoutRoute = async (req, res) => {
                 console.log("Error in removing token during logout")
             }
         }
+        const isProd = process.env.NODE_ENV === "production" || process.env.DEVSTATUS !== "DEVELOPMENT";
         res.cookie('accessToken', '', {
             maxAge: 0,
             httpOnly: true,
-            sameSite: process.env.DEVSTATUS !== "DEVELOPMENT" ? 'none' : 'lax',
-            secure: process.env.DEVSTATUS !== "DEVELOPMENT"
+            sameSite: isProd ? 'none' : 'lax',
+            secure: isProd
         });
         res.cookie('refreshToken', '', {
             maxAge: 0,
             httpOnly: true,
-            sameSite: process.env.DEVSTATUS !== "DEVELOPMENT" ? 'none' : 'lax',
-            secure: process.env.DEVSTATUS !== "DEVELOPMENT"
+            sameSite: isProd ? 'none' : 'lax',
+            secure: isProd
         });
         return res.status(200).json({ message: "Logged out successfully" });
     } catch (error) {
@@ -238,17 +239,18 @@ export const refreshTokenRoute = async (req, res) => {
                 where: { id: user.id },
                 data: { hashedRefreshToken: null }
             })
+            const isProd = process.env.NODE_ENV === "production" || process.env.DEVSTATUS !== "DEVELOPMENT";
             res.cookie('accessToken', '', {
                 maxAge: 0,
                 httpOnly: true,
-                sameSite: process.env.DEVSTATUS !== "DEVELOPMENT" ? 'none' : 'lax',
-                secure: process.env.DEVSTATUS !== "DEVELOPMENT"
+                sameSite: isProd ? 'none' : 'lax',
+                secure: isProd
             });
             res.cookie('refreshToken', '', {
                 maxAge: 0,
                 httpOnly: true,
-                sameSite: process.env.DEVSTATUS !== "DEVELOPMENT" ? 'none' : 'lax',
-                secure: process.env.DEVSTATUS !== "DEVELOPMENT"
+                sameSite: isProd ? 'none' : 'lax',
+                secure: isProd
             });
             return res.status(401).json({
                 message: "Session might be compromised. Please log in again."
